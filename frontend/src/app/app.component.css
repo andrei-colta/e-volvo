@@ -1,0 +1,6 @@
+.router-outlet {
+    font-size: 1rem;
+    position: relative;
+    padding-top: 55.58px;
+    transition: padding 0.3s ease-out;
+}

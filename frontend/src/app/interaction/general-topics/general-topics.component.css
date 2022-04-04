@@ -1,0 +1,12 @@
+ul {
+    list-style-type: none;
+}
+
+.forum {
+    padding: 10px;
+}
+
+.forum:hover {
+    background-color: whitesmoke;
+    box-shadow: 5px 5px 5px #e4e4e4;
+}

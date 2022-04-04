@@ -1,0 +1,126 @@
+
+.wrapper {
+    /* outline-width: 1px;
+    outline:gray;
+    outline-style: dotted; */
+    flex-direction: row;
+}
+
+/* .wrapper:hover {
+    outline-style: dashed !important;
+} */
+
+.profile-pic {
+    box-sizing: border-box;
+    height: 75px;
+    width: 75px;
+    border-radius: 100%;
+    border: 2.5px solid #5858583a;
+    cursor: pointer;
+}
+
+.profile-pic:hover {
+    border-color: #1a2445;
+}
+
+.circle-sm {
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    border-radius: 50%;
+}  
+
+.corner {
+    position: absolute;
+    width:20px; 
+    height:20px;
+    border: 1.5px solid transparent;
+    transition: all 0.2s ease-out;
+}
+
+.corner-top-left, .corner-top-left-full {
+    top:0;
+    left:0;
+}
+
+.corner-top-right, .corner-top-right-full {
+    top:0;
+    right:0;
+}
+
+.corner-bottom-left, .corner-bottom-left-full {
+    bottom:0;
+    left:0;
+}
+
+.corner-bottom-right, .corner-bottom-right-full {
+    bottom:0;
+    right:0;
+}
+
+#postBox>.corner-top-left, #postBox>.corner-top-left-full {
+    border-top: 1.5px solid #1a2445;
+    border-left: 1.5px solid #1a2445;
+}
+
+#postBox>.corner-top-right, #postBox>.corner-top-right-full {
+    border-top: 1.5px solid #1a2445;
+    border-right: 1.5px solid #1a2445;
+}
+
+#postBox>.corner-bottom-left, #postBox>.corner-bottom-left-full {
+    border-bottom: 1.5px solid #1a2445;
+    border-left: 1.5px solid #1a2445;
+}
+
+#postBox>.corner-bottom-right, #postBox>.corner-bottom-right-full {
+    border-bottom: 1.5px solid #1a2445;
+    border-right: 1.5px solid #1a2445;
+}
+
+#postBox:hover>.corner-top-left, #postBox>.corner-top-left-full {
+    width: 51%;
+    height: 51%;
+}
+
+#postBox:hover>.corner-top-right, #postBox>.corner-top-right-full {
+    width: 51%;
+    height: 51%;
+}
+
+#postBox:hover>.corner-bottom-left, #postBox>.corner-bottom-left-full {
+    width: 51%;
+    height: 51%;
+}
+
+#postBox:hover>.corner-bottom-right, #postBox>.corner-bottom-right-full {
+    width: 51%;
+    height: 51%;
+}
+
+.clickableUserName {
+    cursor: pointer;
+    color: #304380;
+}
+
+.clickableUserName:hover {
+    color: #1a2445;
+    text-decoration: underline;
+}
+
+.postBox {
+    border: 1.5px solid #1a2445;
+    padding-left: 25px; padding-right: 25px; padding-bottom: 25px; padding-top: 23px; flex-direction: column; width: 85%; position: relative;
+}
+
+.remove-btn:hover {
+    text-decoration: underline;
+    color: red;
+    cursor: pointer !important;
+}
+
+.profile-side {
+    /* -webkit-box-shadow: 23px 0px 9px -15px rgba(134, 134, 134, 0.26);
+    -moz-box-shadow: 23px 0px 9px -15px rgba(134, 134, 134, 0.26); */
+    box-shadow: 23px 0px 9px -15px rgba(134, 134, 134, 0.26);
+}

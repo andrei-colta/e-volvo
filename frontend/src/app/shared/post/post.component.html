@@ -1,0 +1,83 @@
+<div class="row wrapper mb-4" *ngIf="_data" [ngStyle]="{'width': width}">
+    <div class="d-flex postBox" id="postBox" style="justify-content: right; margin-left: auto;"
+    [ngStyle]="{ 'width': _data.nested ? '90%' : '100%' }">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-2 d-flex pl-0 mr-5 profile-side" style="flex-direction: column;">
+                    <img
+                        class="profile-pic mx-auto"
+                        src="{{_data.user_id.picture}}"
+                        (click)="router.navigate(['/view-profile/' + _data.user_id._id])">
+                    <div class="row mx-auto">
+                        <a
+                            class="clickableUserName"
+                            (click)="router.navigate(['/view-profile/' + _data.user_id._id])">
+                                {{ _data.user_id.firstName }} {{ _data.user_id.lastName }}
+                        </a>
+                    </div>
+                    <div class="row mx-auto" *ngIf="_data.user_id.moderator">
+                        <span class="text-muted">Moderator</span>
+                    </div>
+                    <div class="row mx-auto">
+                        <a class="text-muted" *ngIf="_data.user_id.admin">
+                            <b>Admin</b>
+                        </a>
+                    </div>
+
+                    <div class="row mt-4" style="flex-direction: column;">
+                        <div class="row mx-auto" *ngIf="_data.user_id.birthday">
+                            <span class="text-muted mr-2">Age</span>
+                            {{ sharedService.calcAge(_data.user_id.birthday) }}
+                        </div>
+                        
+                        <div class="row mx-auto" *ngIf="_data.user_id.country">
+                            <span class="text-muted mr-2">Country</span>
+                            {{ _data.user_id.country.name }}
+                        </div>
+
+                        <div class="row mx-auto" *ngIf="_data.user_id.memberSince">
+                            <span class="text-muted mr-2">Member Since</span>
+                            {{ _data.user_id.memberSince.split('T')[0] }}
+                        </div>
+                    </div>
+                </div>
+                <div class="p-0 col-9">
+                    <div class="row">
+                        <div class="col-10 p-0">
+                            <span class="mb-0" style="font-weight: bold">
+                                {{ _data.title }}
+                            </span>
+                        </div>
+                        <div class="col-2" *ngIf="(viewingUserIsAdmin || viewingUserIsModerator) && !_isRoot">
+                            <span class="remove-btn" style="float: right" (click)="remove.emit()">
+                                Remove Post
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-2" style="justify-content: flex-start;">
+                        <div class="d-flex" style="flex-direction: column; flex-grow: 1">
+                            <div class="row" [ngClass]="{'mb-5': dashboard}">
+                                <div class="text-muted col-12" [innerHTML]="_data.description"></div>        
+                            </div>
+                            <div class="row mt-3 col-12 unselectable" style="flex-shrink: 1; flex-basis: 1; position: absolute; bottom: 0; justify-content: right;" *ngIf="dashboard">
+                                <button *ngIf="_type === 'newPost'" class="htButton-red ml-auto" style="flex-shrink: 1; flex-basis: 1; float: right" (click)="unfollow.emit()">
+                                    Unfollow Thread
+                                </button> 
+
+                                <button class="htButton-blue ml-lg-2 ml-auto" style="flex-shrink: 1; flex-basis: 1; float: right;" (click)="router.navigate(['/thread/' + _data.thread_id])">
+                                    View Thread
+                                </button> 
+                                <!-- <div class="col-12 mt-2 d-flex" style="flex-direction: row; justify-content: space-between">            
+                                    <div class="mt-auto">
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+</div>

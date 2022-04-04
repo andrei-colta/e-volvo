@@ -1,0 +1,199 @@
+<div class="unselectable" style="min-height: 60vh;">
+    <div class="col-12">
+        <h5 class="text-muted my-auto mr-3">
+            <span *ngIf="selectedCar">Edit</span>
+            <span *ngIf="!selectedCar">Add</span>
+            car
+        </h5>
+    </div>
+    <div class="row mx-auto" style="min-height: 40vh;">
+        <div class="row mx-auto" style="width: 100%">
+            <div class="col-12 d-flex">
+                <div *ngIf="hasAlert">
+                    <p class="equal-margins p-0" [ngStyle]="{'color':alertType}"
+                        style="text-align:center; padding-left: 10px;">
+                        {{ alertText }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row mx-auto" style="width: 100%;">
+            <div class="col-6" style="border-right: 1px solid #dddddd; height: 100%">
+                <form [formGroup]="newCarForm">
+                    <div class="row mt-3">
+                        <div class="col-sm-6">
+                            <div class="col-12 d-flex mt-1 p-0" style="flex-direction: column">
+                                <label for="brand" maxlength="99" class="label-bln-nosep"
+                                    [ngClass]="{'label-bln-active': (brand.value !== '')}">Brand</label>
+                                <div class="d-flex" style="width:100%; flex-direction: row">
+                                    <input type="text"
+                                        class="input-bln"
+                                        [ngClass]="{'bln-success': brand.touched && brand.valid, 'bln-fail': brand.touched && brand.invalid}"
+                                        id="brand" formControlName="brand" style="flex-grow: 1">
+                                    <div class="d-flex"
+                                        style="flex-direction: row; justify-content: center;"
+                                        *ngIf="brand.touched && brand.invalid">
+                                        <div class="col-2 d-flex"
+                                            style="align-items: center; text-align: center">
+                                            <i placement="left-top" container="body"
+                                                #tbrand="ngbTooltip" [ngbTooltip]="brandTooltip"
+                                                class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                                style="font-size: 1.5rem"></i>
+                
+                                            <ng-template #brandTooltip>
+                                                <div *ngIf="brand.errors['required']">
+                                                    <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="col-sm-6">
+                            <div class="col-12 d-flex mt-1 p-0" style="flex-direction: column">
+                                <label for="model" maxlength="99" class="label-bln-nosep"
+                                    [ngClass]="{'label-bln-active': (model.value !== '')}">Model</label>
+                                <div class="d-flex" style="width:100%; flex-direction: row">
+                                    <input type="text"
+                                        class="input-bln"
+                                        [ngClass]="{'bln-success': model.touched && model.valid, 'bln-fail': model.touched && model.invalid}"
+                                        id="model" formControlName="model" style="flex-grow: 1">
+                                    <div class="d-flex"
+                                        style="flex-direction: row; justify-content: center;"
+                                        *ngIf="model.touched && model.invalid">
+                                        <div class="col-2 d-flex"
+                                            style="align-items: center; text-align: center">
+                                            <i placement="left-top" container="body"
+                                                #tmodel="ngbTooltip" [ngbTooltip]="modelTooltip"
+                                                class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                                style="font-size: 1.5rem"></i>
+                
+                                            <ng-template #modelTooltip>
+                                                <div *ngIf="model.errors['required']">
+                                                    <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="row mt-3">
+                        <div class="col-sm-6">
+                            <div class="col-12 d-flex mt-1 p-0" style="flex-direction: column">
+                                <label for="year" maxlength="99" class="label-bln-nosep"
+                                    [ngClass]="{'label-bln-active': (year.value !== '')}">Year</label>
+                                <div class="d-flex" style="width:100%; flex-direction: row">
+                                    <input type="text"
+                                        class="input-bln"
+                                        [ngClass]="{'bln-success': year.touched && year.valid, 'bln-fail': year.touched && year.invalid}"
+                                        id="year" formControlName="year" style="flex-grow: 1">
+                                    <div class="d-flex"
+                                        style="flex-direction: row; justify-content: center;"
+                                        *ngIf="year.touched && year.invalid">
+                                        <div class="col-2 d-flex"
+                                            style="align-items: center; text-align: center">
+                                            <i placement="left-top" container="body"
+                                                #tyear="ngbTooltip" [ngbTooltip]="yearTooltip"
+                                                class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                                style="font-size: 1.5rem"></i>
+                
+                                            <ng-template #yearTooltip>
+                                                <div *ngIf="year.errors['required']">
+                                                    <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                                </div>
+                                                <div *ngIf="year.errors['pattern']">
+                                                    <p class="equal-margins">Year {{ environment.FIELD_NUMBERS }}</p>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="col-sm-6">
+                            <div class="col-12 d-flex mt-1 p-0" style="flex-direction: column">
+                                <label for="engine" maxlength="99" class="label-bln-nosep"
+                                    [ngClass]="{'label-bln-active': (engine.value !== '')}">Engine</label>
+                                <div class="d-flex" style="width:100%; flex-direction: row">
+                                    <input type="text"
+                                        class="input-bln"
+                                        [ngClass]="{'bln-success': engine.touched && engine.valid, 'bln-fail': engine.touched && engine.invalid}"
+                                        id="engine" formControlName="engine" style="flex-grow: 1">
+                                    <div class="d-flex"
+                                        style="flex-direction: row; justify-content: center;"
+                                        *ngIf="engine.touched && engine.invalid">
+                                        <div class="col-2 d-flex"
+                                            style="align-items: center; text-align: center">
+                                            <i placement="left-top" container="body"
+                                                #tengine="ngbTooltip" [ngbTooltip]="engineTooltip"
+                                                class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                                style="font-size: 1.5rem"></i>
+                
+                                            <ng-template #engineTooltip>
+                                                <div *ngIf="engine.errors['required']">
+                                                    <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="row mx-auto my-5" *ngIf="selectedCar?._id">
+                        <span class="col-12 p-0 text-muted mb-3">Pictures</span>
+                        
+                        <input class="form-control" style="display: none" type="file" accept="image/*"
+                                    (change)="createFormData($event)" #fileInput multiple/>
+
+                        <div class="row col-12">
+                            <div class="picture-box mr-2 mt-2" (click)="fileInput.click()">
+                                <div class="button-text">+</div>
+                                <div class="overlay"></div>
+                            </div>
+                            <div class="picture-box mr-2 mt-2" *ngFor="let file of selectedCar.pictures" (click)="openPic(file)">
+                                <img class="car-pic" src="{{ file.name }}">
+                                <div class="overlay">
+                                    <span class="pic-text" (click)="deletePic(file)">&times;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary mt-5" (click)="addCar()">
+                        <span *ngIf="selectedCar">Edit</span>
+                        <span *ngIf="!selectedCar">Add</span>
+                        car
+                    </button>
+                </form>
+            </div>
+            
+            <div class="col-6" *ngIf="carList.length > 0">
+                <h3 class="text-muted">
+                    Car List
+                </h3>
+
+                <div class="container" id="files" style="width: 100%">
+                    <ul>
+                        <li *ngFor="let car of carList; index as i">
+                            <div class="col-8 d-flex" style="flex-direction: column; justify-content: center">
+                                <a class="green-link" target="_blank" style="margin-right: 5px;" (click)="selectCar(i)">
+                                    <span class="text-hide-overflow d-block my-auto" style="vertical-align: center; width: 100% !important; position: relative">
+                                        {{ car.year }} {{ car.brand }} {{ car.model }} {{ car.engine }}
+                                    </span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

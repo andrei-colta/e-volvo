@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        <span *ngIf="shouldAccept">Terms of service and privacy policy</span>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="legal-content" [innerHTML]="terms.text"></div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="acceptTerms()" *ngIf="shouldAccept">Accept</button>
+    <button type="button" class="btn btn-light" (click)="activeModal.close()" *ngIf="!shouldAccept">Close</button>
+</div>

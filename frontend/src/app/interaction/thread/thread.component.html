@@ -1,0 +1,69 @@
+<div class="content-wrapper d-flex"
+    style="flex-flow: column; justify-content: flex-start; font-family: 'Roboto Condensed', sans-serif !important; margin-top: 50px; min-height: 95vh;">
+    <div class="d-flex mt-1" style="flex-direction: column; position: absolute; height: 100%; width: 100%">
+        <div class="d-flex"
+            style="flex-direction: row; position: sticky; top: 0px;  z-index: 700;  transition: all 0.3s ease-out"
+            [ngStyle]="{'padding-top': '61px' }">
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3" style="width: 100%">
+        <div class="col-11 mt-5">
+            <div class="container-fluid justify-content-center">
+                <div class="row">
+                    <div class="col-10" *ngIf="threadData">
+                        <h3 class="text-large">{{ threadData.topic_id.name }}</h3>
+
+                        <div class="row mx-auto text-muted">
+                            <h5>
+                                {{ threadData.rootPost.title }}
+                            </h5>
+                        </div>
+
+                        <a class="ml-1 my-auto green-link link-transition-fast"
+                        (click)="router.navigate(['/threads/' + threadData.topic_id.url])">
+                        <i class="fas fa-arrow-left mr-3"></i>Back to Forum</a>
+                    </div>
+                    <div class="col-2" *ngIf="!showNewPostForm">
+                        <button class="htButton-blue d-inline-flex" style="position: absolute; bottom: 0" (click)="replyToPost()">
+                            Add Reply
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 ml-5 mr-5" *ngIf="!showNewPostForm" style="max-height: 65vh; overflow: auto" #scrollable>
+        <app-post   
+            *ngFor="let p of paginatedPosts"
+            [data]="p"
+            style="width: 60vw"
+            [isRoot]="p._id === threadData.rootPost._id"
+            (remove)="removePost(p)">
+        </app-post>
+    </div>
+
+    <div class="col-12 p-0" style="position: absolute; bottom: 0" *ngIf="posts && !showNewPostForm">
+        <p-paginator [rows]="postsPerPage" totalRecords="{{posts.length}}" (onPageChange)="paginate($event)"></p-paginator>
+    </div>
+
+    <div class="col-12 ml-5 mr-5 mb-5" *ngIf="showNewPostForm">
+        <app-post [data]="posts[0]" [isRoot]="true" style="width: 60vw"></app-post>
+
+        <form [formGroup]="newPostForm" style="width: 80%;">
+            <label class="text-muted">Write a response</label>
+            <ckeditor [editor]="Editor" data="{{environment.EDITOR_PLACEHOLDER_POST}}" (blur)="onChange($event)"></ckeditor>
+
+            <div class="col-12 mt-3 p-0">
+                <button class="htButton-red d-inline-flex mr-3" style="flex-shrink: 1; flex-basis: 1" (click)="showNewPostForm = false">
+                    Cancel
+                </button>
+
+                <button class="htButton-blue d-inline-flex" style="flex-shrink: 1; flex-basis: 1" (click)="addResponse()">
+                    Add Post
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

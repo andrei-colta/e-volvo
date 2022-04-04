@@ -1,0 +1,117 @@
+<div class="container-fluid content-wrapper" style="min-height: 100vh">
+    <div class="row">
+        <div class="container">
+            <div class="row" style="justify-content: space-around">
+                <div class="col-12 col-lg-9 bg-light rounded border border-primary" style="padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 20px; overflow: hidden">
+                    <div class="chat-container">
+                        <!-- <div class="main-card">
+                        </div> -->
+                        <!-- <ul class="chat-list">
+                            <li *ngFor="let message of messages" [ngClass]="[(message.action === undefined)? 'chat-list-item': '']" class="pt-3">
+                                <div class="row ml-3">
+                                    <img src="{{message.from.avatar}}" class="avatar mr-2" *ngIf="message.action === undefined">
+                                    <h5 class="text-muted" *ngIf="message.action === undefined">
+                                        {{message.from.name}}
+                                    </h5>
+                                </div>
+                                <div class="row ml-3">
+                                    <p *ngIf="message.action === undefined">
+                                        <span> {{message.content}} </span>
+                                    </p>
+                                </div>
+                                <p *ngIf="message.action === action.JOINED" class="chat-notification">
+                                    <span> <b>{{message.from.name}}</b> joined to the conversation. </span>
+                                </p>
+                                <p *ngIf="message.action === action.RENAME" class="chat-notification">
+                                    <span> <b>{{message.content.previousUsername}}</b> is now <b>{{message.content.username}}</b>
+                                    </span>
+                                </p>
+                            </li>
+                        </ul> -->
+                        <div class="row mx-auto">
+                            <h3 *ngIf="topicData">
+                                {{ topicData.name }} chat
+                            </h3>
+                        </div>
+                        <div class="row mx-auto">
+                            <a class="ml-1 my-auto green-link link-transition-fast"
+                                (click)="router.navigate(['/threads/' + topicName])">
+                            <i class="fas fa-arrow-left mr-3"></i>Back to forum</a>
+                        </div>
+                        
+                        <div class="row mx-auto mt-5">
+                            <span class="text-muted" *ngIf="connections === 1">There is currently {{ connections }} user online</span>
+                            <span class="text-muted" *ngIf="connections > 1">There are currently {{ connections }} users online</span>
+                        </div>
+                        <div class="chat-list" *ngIf="messages && messages.length > 0" #scrollable>
+                            <ul class="chat-list-container" #content>
+                                <li class="my-2 d-block row" style="padding: 0" *ngFor="let message of messages; index as i" #messages>
+                                    <div class="col-12" style="clear:both; min-height: 100%">
+                                        <div class="message left-message d-flex" *ngIf="message.from === user_id || message.from._id === user_id; else otherSender">
+                                            <p class="bg-primary chat-bubble" style="max-width: 100%; color: white;" placement="left" [ngbTooltip]="tipContent">
+                                                {{message.content}}
+                                            </p>
+                                            <img src="{{message.from.picture ? message.from.picture : message.avatar}}" class="d-inline-flex img-responsive chat-icon ml-1">
+                                        </div>
+                                        <ng-template #otherSender>
+                                            <div class="message right-message d-flex">
+                                                <img src="{{message.from.picture ? message.from.picture : message.avatar}}" class="d-inline-flex img-responsive chat-icon mr-1">
+                                                <p class="chat-bubble" style="background-color: #e48f8f" placement="right" [ngbTooltip]="tipContent">
+                                                    {{message.content}}
+                                                </p>
+                                            </div>
+                                        </ng-template>
+
+                                        <ng-template #tipContent>
+                                            <span style="color: rgb(212, 212, 212)">
+                                                <i>
+                                                    {{ message.from.firstName }} at
+                                                    <span *ngIf="!message.sameDay">
+                                                        {{message.dateSent.split('T')[0]}}&nbsp;
+                                                    </span>
+                                                    {{message.dateSent.split('T')[1].split('.')[0].split(':')[0]}}:{{message.dateSent.split('T')[1].split('.')[0].split(':')[1]}}
+                                                </i>
+                                            </span>
+                                        </ng-template>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- <div class="chat-footer-container">
+                            <div class="chat-input">
+                                <input 
+                                    #inputMessage 
+                                    maxlength="140" 
+                                    placeholder="Type your message" 
+                                    [(ngModel)]="messageContent" 
+                                    (keyup.enter)="sendMessage()">
+                            </div>
+                        </div> -->
+
+                        <!-- <div class="container" style="bottom: 50px; position: absolute"> -->
+                        <div class="chat-input container d-flex mt-1 mr-3">
+                            <!-- <label for="message" class="label-bln-nosep" [ngClass]="{'label-bln-active': messageContent}">Type Message...</label>
+                            <input type="text" class="input-bln" id="message" [(ngModel)]="messageContent" (keyup.enter)="sendMessage()" style="width: 90%"> -->
+                            <div class="ch-input-container col-11">
+                                <input 
+                                    type="text"
+                                    class="round-input"
+                                    id="message"
+                                    [(ngModel)]="messageContent"
+                                    (keyup.enter)="sendMessage()"
+                                    placeholder="Type Message..."
+                                    style="width: 100%;">
+                            </div>
+
+                            <div class="col-1">
+                                <button mat-mini-fab color="primary" (click)="sendMessage()">
+                                    <i class="fa fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

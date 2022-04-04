@@ -1,0 +1,153 @@
+<div class="content-wrapper d-flex justify-content-center"
+    style="font-family: 'Roboto Condensed', sans-serif !important;">
+    <div class="row justify-content-center" style="width: 100%; min-height: 100vh;">
+        <div class="col-12 mt-5 pl-4 pr-5">
+            <div class="row" style="height: 100%;" *ngIf="!privateProfile">
+                <div class="col-4 col-xl-2 pl-1 pr-1 pr-lg-3 d-flex"
+                    style="border-right: solid 0.5px #777; flex-direction: column">
+                    <div class="d-flex" style="flex-direction: column;" *ngIf="profileData">
+                        <div class="d-flex mt-5" style="flex-direction: row; justify-content: center; padding-top: 61px;">
+                            <div class="px-2 d-flex justify-content-center"
+                                style="flex-direction: column; align-items: center">
+                                <img *ngIf="profileData.picture" src="{{ profileData.picture }}"
+                                    style="height: 150px; width: 150px;"
+                                    class="mb-3 img-fluid d-block rounded-circle box-shadow-center-down">
+
+                                    <h4 class="mb-1" style="text-align: center" *ngIf="profileData.firstName">{{profileData.firstName}} {{profileData.lastName}}</h4>
+                                    <h4 class="mb-1" style="text-align: center" *ngIf="!profileData.firstName">{{profileData.email}}</h4>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-3 mx-lg-2"
+                            style="flex-direction: column; flex-grow: 1; justify-content: center">
+                            <div class="d-flex" style="flex-direction: row; justify-self: center">
+                                <div class="d-flex mx-auto" style="flex-direction: column; width: 100%">
+                                    <ul class="list-unstyled pl-4 mt-1"
+                                        style="padding-inline-start: 0px !important; width: 100%">
+                                        <li class="d-flex my-3" style="flex-direction: column">
+                                            <div class="mx-auto">
+                                                <span class="label-nasp mr-2">Email</span>
+                                                {{profileData.email}}
+                                            </div>
+                                        </li>
+                                        <li class="d-flex my-3" style="flex-direction: column" *ngIf="profileData.age">
+                                            <div class="mx-auto">
+                                                <span class="label-nasp mr-2">Age</span>
+                                                {{profileData.age}}
+                                            </div>
+                                        </li>
+                                        <li class="d-flex my-3" style="flex-direction: column" *ngIf="profileData.country">
+                                            <div class="mx-auto">
+                                                <span class="label-nasp mr-2">Country</span>
+                                                {{profileData.country.name}}
+                                            </div>
+                                        </li>
+                                        <li class="d-flex my-3" style="flex-direction: column" *ngIf="profileData.city">
+                                            <div class="mx-auto">
+                                                <span class="label-nasp mr-2">City</span>
+                                                {{profileData.city.name}}
+                                            </div>
+                                        </li>
+                                        <li class="d-flex my-3" style="flex-direction: column" *ngIf="profileData.sex">
+                                            <div class="mx-auto">
+                                                <span class="label-nasp mr-2">Gender</span>
+                                                {{profileData.sex === 'M' ? 'Male' : 'Female'}}
+                                            </div>
+                                        </li>
+                                        <li class="d-flex my-3" style="flex-direction: column" *ngIf="profileData.phone">
+                                            <div class="mx-auto">
+                                                <span class="label-nasp mr-2">Phone Number</span>
+                                                {{profileData.phone}}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 col-xl-10 pl-1 pr-1 pr-lg-3 d-flex" style="min-height: 55.5vh; flex-direction: column;" *ngIf="!privateProfile">
+                    <div class="row mt-5" *ngIf="cars && cars.length > 0">
+                        <div class="col-md-10">
+                            <div class="row mx-auto mt-2">
+                                <h3 class="ml-3 text-muted">
+                                    Cars
+                                </h3>
+    
+                                <div class="container col-12" id="files" style="width: 100%">
+                                    <ul>
+                                        <li *ngFor="let car of cars">
+                                            <div class="col-8 d-flex" style="flex-direction: column; justify-content: center">
+                                                <a class="green-link" target="_blank" style="margin-right: 5px;" (click)="selectCar(car)">
+                                                    <span class="text-hide-overflow d-block my-auto" style="vertical-align: center; width: 100% !important; position: relative">
+                                                        {{ car.year }} {{ car.brand }} {{ car.model }} {{ car.engine }}
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="row col-12 ml-3" *ngIf="selectedCar">
+                                    <div class="numbertext" style="color: white; background-color: rgba(0, 0, 0, 0.8);">{{ pictures.indexOf(selectedPic) + 1}} / {{ pictures.length }}</div>
+                                    <img class="modal-content" src="{{ selectedPic.name }}" (click)="viewPicture()" style="cursor: pointer;">
+                                    <a class="prev" (click)="changePic(-1)">&#10094;</a>
+                                    <a class="next" (click)="changePic(1)">&#10095;</a>
+                                </div>
+                                <div class="row col-12 pr-0 ml-3 unselectable">
+                                    <div class="row mt-3 col-12 pr-0" *ngIf="pictures" style="max-height: 8vh">
+                                        <div *ngFor="let pic of pictures; index as i">
+                                            <div class="pic mr-2" [ngClass]="{ 'pic-selected': selectedPic === pic }" (click)="selectedPic = pic"
+                                            *ngIf="i !== pictures.indexOf(selectedPic) &&
+                                            ((pictures.indexOf(selectedPic) < picsInPreview && i < picsInPreview) ||
+                                            (pictures.indexOf(selectedPic) >= picsInPreview && (pictures.indexOf(selectedPic) - i < picsInPreview)
+                                            && pictures.indexOf(selectedPic) - i > 0))">
+                                                <!-- <i class="view fa fa-search-plus"></i> -->
+                                                <img src="{{pic.name}}" alt="" style="max-height: 8vh">
+                                            </div>
+                                            <div class="pic mr-2" [ngClass]="{ 'pic-selected': selectedPic === pic }" (click)="selectedPic = pic"
+                                            *ngIf="i === pictures.indexOf(selectedPic)">
+                                                <!-- <i class="view fa fa-search-plus"></i> -->
+                                                <img src="{{pic.name}}" alt="" style="max-height: 8vh">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5" *ngIf="profileData && profileData.bio">
+                        <div class="col-md-10">
+                            <div class="row mx-auto mt-2">
+                                <h3 class="ml-3 text-muted">
+                                    Bio
+                                </h3>
+    
+                                <div class="col-12 p-0 ml-3" [innerHTML]="profileData.bio"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" *ngIf="!privateProfile && (!cars || !(cars.length > 0)) && (!profileData || !profileData.bio)">
+                        <h1 class="text-muted unselectable" style="position: absolute; left: 8vw; top: 40vh">
+                            Here is where this user's cars and bio will appear once they complete them.
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="privateProfile">
+                <h1 class="text-muted" style="position: absolute; left: 35vw; top: 40vh">
+                    THIS PROFILE IS PRIVATE
+                </h1>
+            </div>
+            <div id="myModal" class="modal unselectable" *ngIf="showModal">
+                <!-- The Close Button -->
+                <span class="close" (click)="closeModal()">&times;</span>
+                
+                <!-- Modal Content (The Image) -->
+                <img class="modal-content-big" src="{{ selectedModalPic.name }}">
+                <div class="numbertext">{{ pictures.indexOf(selectedModalPic) + 1}} / {{ pictures.length }}</div>
+                <a class="prev" (click)="changeModalPic(-1)">&#10094;</a>
+                <a class="next" (click)="changeModalPic(1)">&#10095;</a>
+            </div>
+        </div>
+    </div>
+</div>

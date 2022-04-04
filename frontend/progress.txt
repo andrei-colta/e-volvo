@@ -1,0 +1,38 @@
+Pages:
+✔️ = created
+✔️✔️ = done
+
+Home module
+    - FAQ's     ✔️
+    - home page ✔️
+
+Access module
+    - login                ✔️✔️
+    - signup               ✔️✔️
+    - terms and conditions ✔️
+    - privacy policy GDPR  ✔️
+    - forgot password      ✔️
+
+Interaction module
+    - dashboard           ✔️
+    - general topics      ✔️✔️
+    - threads submenu     ✔️
+    - thread              ✔️
+    - live chat on topics ✔️
+
+Profile module
+    - edit profile     ✔️✔️
+    - profile settings ✔️✔️
+    - display profile  ✔️
+
+Maintenance module
+    - moderator menu ✔️
+    - admin menu     ✔️
+
+Common module
+    - forum post
+    - new thread form 
+    - response form
+    - footer          ✔️
+    - navbar          ✔️
+    - preview post 

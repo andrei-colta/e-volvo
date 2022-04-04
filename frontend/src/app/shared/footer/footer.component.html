@@ -1,0 +1,88 @@
+<div class="container-fluid unselectable"
+    style="bottom: 0; padding-top: 80px; padding-bottom: 60px; position: relative; background-image: linear-gradient(to top, #1a2445, #263463, #2f4079); z-index:auto ">
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left">
+
+        <!-- Grid row -->
+        <div class="row ">
+
+            <!-- Grid column -->
+            <div class="col-md-4 mx-auto">
+
+                <!-- Content -->
+
+                <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Contact Us</h5>
+                <ul class="list-unstyled">
+                    <li>
+                        <!-- <i class="icon icon-map-marker"></i> -->
+                        <i class="fas fa-home mr-3"></i>
+                        <strong> Address : &nbsp;</strong>
+                        Bulevardul Iuliu Maniu 6D, București 061344
+                    </li>
+                    <li>
+                        <!-- <i class="icon icon-phone"></i> -->
+                        <i class="fas fa-phone mr-3"></i>
+                        <strong>Phone: &nbsp;</strong>
+                        <a class="white-link link-overlay" href="tel:+40712312312">
+                            +40 712 312 312
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope mr-3"></i>
+                        <strong>Email: &nbsp;</strong>
+                        <a class="white-link link-overlay" href="mailto:andrei_mihail.colta@acs.upb.ro">
+                            andrei_mihail.colta@acs.upb.ro
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- Grid column -->
+
+
+
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!-- Grid column -->
+            <div class="col-md-4 mx-auto">
+
+                <!-- Links -->
+                <h5 class="font-weight-bold text-uppercase mt-3 mb-4">External Links</h5>
+
+                <ul class="list-unstyled link-overlay">
+                    <li>
+                        <a href="https://www.volvocars.com/ro" target="_blank" class="link-overlay">Volvo Cars RO</a>
+                    </li>
+                    <li>
+                        <a href="https://www.volvo.com/home.html" target="_blank" class="link-overlay">Volvo Home Intl.</a>
+                    </li>
+                    <li>
+                        <a href="http://www.volvo-club.ro/" target="_blank" class="link-overlay">Volvo Club RO</a>
+                    </li>
+                    <li>
+                        <a href="https://www.swedespeed.com/" target="_blank" class="link-overlay">Swedespeed</a>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- Grid column -->
+
+        </div>
+        <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+    <hr>
+
+    <!-- Register to action -->
+    <ul class="list-unstyled list-inline text-center py-2" *ngIf="!this.isLogged">
+        <li class="list-inline-item">
+            <h5 class="mb-1">Register for Free</h5>
+        </li>
+        <li class="list-inline-item">
+            <a [routerLink]="['/signup']" class="btn btn-danger btn-rounded">Sign Up</a>
+        </li>
+    </ul>
+</div>

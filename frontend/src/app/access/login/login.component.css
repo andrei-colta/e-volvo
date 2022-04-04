@@ -1,0 +1,9 @@
+.login-bg {
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('../../../assets/volvo8501.jpg');
+    background-clip: content-box;
+    height: 100vh;
+}

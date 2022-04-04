@@ -1,0 +1,45 @@
+ul, h3, h2 {
+    color: white;
+}
+
+p, li, a, h5{
+    color: whitesmoke;
+}
+
+.link-overlay{
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+}
+
+.link-overlay:hover {
+    color: #435db3 !important;
+}
+
+#news ul li {
+    position: relative;
+    padding-bottom: 10px;
+}
+  
+#news ul {
+    list-style: none;
+}
+  
+#news ul li:before{
+    content: '';
+    position: absolute;
+    border-right:2px solid #ddd;
+    border-bottom:2px solid #ddd;
+    width:13px;
+    height:13px;
+    top: calc(50% - 4px);
+    left: -30px;
+    transform: translateY(-50%) rotate(-45deg);
+    transition: all 0.2s ease;
+}
+
+#news ul li:hover:before {
+    border-right:2px solid #fff;
+    border-bottom:2px solid #fff;
+    left: -35px;
+}

@@ -1,0 +1,98 @@
+<nav class="navbar navbar-expand-md fixed-top hideable nav-style unselectable" [ngClass]="{'hidden':scrollingDown}"
+    #navWrap>
+    <!-- Logo -->
+    <a routerLink='' class="navbar-brand" style="cursor: pointer">
+        <div class="d-flex" style="flex-direction: row">
+            <div class="d-flex" style="flex-direction: column; justify-content: center">
+                <!-- <img class="my-auto" src="../../assets/Favicons/icon4_perspective.png" style="max-height: 30px" /> -->
+            </div>
+            <div class="d-flex ml-1" style="flex-direction: column; justify-content: center">
+                <h5 class="my-auto" style="color: #1a2445">
+                    <img src="/assets/evolvo logo.ico" alt="" style="height: 32px">
+                    <img src="/assets/evolvo text.png" alt="" style="width: 128px; height:20px; margin-left: 20px">
+                </h5>
+            </div>
+        </div>
+    </a>
+    <!-- Hamburger button for collapsing nav on small screens -->
+    <button class="navbar-toggler hidden-sm-up" style="color: #1a2445" type="button"
+        (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarsDefault" aria-controls="navbarsDefault"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+    </button>
+    <!-- Menu -->
+    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" style="transition: all 0.3s ease"
+        id="navbarsDefault">
+        <ul class="navbar-nav ml-md-5 mr-auto">
+            <li class="nav-item && !admin">
+                <a routerLink='/faq' class="nav-link d-block" *ngIf="!admin">
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        FAQ's
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item" *ngIf="isLogged && !admin">
+                <a [routerLink]="'/dashboard'" class="nav-link d-block">
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        Dashboard
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]="'/general'" class="nav-link d-block">
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        General Topics
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item" *ngIf="admin">
+                <a [routerLink]="'/admin-menu'" class="nav-link d-block">
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        Admin Menu
+                    </p>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav mr-md-5 ml-auto">
+            <li class="nav-item" *ngIf="!isLogged">
+                <a routerLink='login' class="nav-link text-small">
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        Login
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item" *ngIf="!isLogged">
+                <a routerLink='signup' class="nav-link text-small">
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        Sign up
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item dropdown" ngbDropdown *ngIf="isLogged">
+                <a class="nav-link dropdown-toggle" id="id03" ngbDropdownToggle>
+                    <img src="{{picture}}" style="height: 30px; width: 30px; border-radius: 100%; margin-right: 10px">
+                    <p class="my-auto mx-0 d-flex justify-content-center" style="flex-direction: column; height: 100%">
+                        <span *ngIf="firstName">{{ firstName }}</span>
+                        <span *ngIf="!firstName">{{ email }}</span>
+                    </p>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="id03" ngbDropdownMenu>
+                    <a class="dropdown-item" routerLink="view-profile/{{id}}" *ngIf="!admin">
+                        View Profile
+                    </a>
+                    <a class="dropdown-item" routerLink='edit-profile/0' *ngIf="!admin">
+                        Edit Profile
+                    </a>
+                    <a class="dropdown-item" routerLink='login' (click)="accessService.logout()">
+                        Logout
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Scroll to top button -->
+<button class="but-square-fixed loadable" (click)="scrollToTop()" (mouseover)="hoverHandler()" #scrollTopBut>
+    <i class="fas fa-angle-up"></i>
+</button>

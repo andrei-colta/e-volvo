@@ -1,0 +1,96 @@
+<div class="content-wrapper d-flex justify-content-center login-bg">
+    <div class="row justify-content-center" style="width: 100%">
+        <div class="col-lg-5 col-md-7 col-12 d-flex justify-content-center">
+            <form [formGroup]="signupForm" class="my-auto p-4 col-12 d-flex justify-content-center access-form"
+                style="flex-direction: column">
+                <div class="row mx-auto" style="width: 100%">
+                    <div class="col-12 d-flex">
+                        <h3 class="text-large mb-4"><b>Signup</b></h3>
+                    </div>
+                </div>
+
+                <div class="row mx-auto" style="width: 100%">
+                    <div class="col-12 d-flex">
+                        <div *ngIf="hasAlert">
+                            <p class="p-0 equal-margins" style="padding-left: 10px;" [ngStyle]="{'color': environment.FAIL_COLOR }">
+                                {{ alertText }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mx-auto mt-2" style="width: 100%">
+                    <div class="col-12 d-flex mt-1">
+                        <label class="label-bln" [ngClass]="{'label-bln-active': (email.value !== '')}"
+                            for="email">E-mail</label>
+                    </div>
+                    <div class="col-12 d-flex" style="flex-direction: row">
+                        <input class="input-bln"
+                            [ngClass]="{'bln-success': email.valid, 'bln-fail': email.touched && email.invalid}"
+                            style="flex-grow: 1" id="email" placeholder="" formControlName="email">
+                        <div class="d-flex" style="flex-direction: row; justify-content: center;"
+                            *ngIf="email.touched && email.invalid">
+                            <div class="col-2 d-flex" style="align-items: center; text-align: center">
+                                <i placement="right" container="body" [ngbTooltip]="emailTooltip" #temail="ngbTooltip"
+                                    class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                    style="font-size: 1.5rem"></i>
+
+                                <ng-template #emailTooltip>
+                                    <div *ngIf="email.errors['required']">
+                                        <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                    </div>
+                                    <div *ngIf="email.errors['email'] && email.value">
+                                        <p class="equal-margins">{{ environment.EMAIL_NOT_VALID }}</p>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mx-auto mt-2" style="width: 100%">
+                    <div class="col-12 d-flex mt-1">
+                        <label class="label-bln" [ngClass]="{'label-bln-active': (password.value !== '')}"
+                            for="password">Password</label>
+                    </div>
+                    <div class="col-12 d-flex" style="flex-direction: row">
+                        <input class="input-bln"
+                            [ngClass]="{'bln-success': password.valid, 'bln-fail': password.touched && password.invalid}"
+                            style="flex-grow: 1" type="password" id="password" placeholder="" formControlName="password"
+                            trim>
+
+                        <div class="d-flex" style="flex-direction: row; justify-content: center;"
+                            *ngIf="password.touched && password.invalid">
+                            <div class="col-2 d-flex" style="align-items: center; text-align: center">
+                                <i placement="right" container="body" #tpass="ngbTooltip" [ngbTooltip]="passTooltip"
+                                    class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                    style="font-size: 1.5rem"></i>
+
+                                <ng-template #passTooltip>
+                                    <div *ngIf="password.errors['required']">
+                                        <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                    </div>
+                                    <div *ngIf="password.errors['strength']">
+                                        <p class="equal-margins">{{ password.errors['strength'] }}</p>
+                                    </div>
+                                    <div *ngIf="password.errors['minLength']">
+                                        <p class="equal-margins">Your password should be
+                                            {{ password.errors['minLength'].requiredLength }}
+                                            characters long</p>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mx-auto mt-5 mb-1" style="width: 100%">
+                    <div class="col-12" style="margin-bottom:20px;">
+                        <button class="access-but col-12 d-block" (click)="signup()" type="submit">Create Account</button>
+                        <button class="switch-but col-12 mt-2 d-block" (click)="router.navigate(['/login'])">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

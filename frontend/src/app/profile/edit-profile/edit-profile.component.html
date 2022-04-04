@@ -1,0 +1,439 @@
+<div class="content-wrapper d-flex"
+    style="flex-flow: column; justify-content: flex-start; font-family: 'Roboto Condensed', sans-serif !important; margin-top: 50px">
+    <div class="d-flex mt-1" style="flex-direction: column; position: absolute; height: 100%; width: 100%">
+        <div class="d-flex"
+            style="flex-direction: row; position: sticky; top: 0px;  z-index: 700;  transition: all 0.3s ease-out"
+            [ngStyle]="{'padding-top': '61px' }">
+        </div>
+    </div>
+    <div class="row justify-content-center mb-5 pb-4" style="width: 100%">
+        <div class="col-11 mt-5 mb-5">
+            <div class="container-fluid justify-content-center">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-large">Edit Profile</h3>
+                    </div>
+                </div>
+                <div class="row mt-4 unselectable pointer-cur">
+                    <div class="col-12">
+                        <ul class="nav nav-tabs mouse-cur">
+                            <li class="nav-item pointer-cur">
+                                <a class="nav-link" [ngClass]="{'active': selectedPage === 0}"
+                                    (click)="selectPage(0)">Personal Info</a>
+                            </li>
+                            <li class="nav-item pointer-cur">
+                                <a class="nav-link" [ngClass]="{'active': selectedPage === 1}"
+                                    (click)="selectPage(1)">Car Info</a>
+                            </li>
+                            <li class="nav-item pointer-cur">
+                                <a class="nav-link" [ngClass]="{'active': selectedPage === 2}"
+                                    (click)="selectPage(2)">Bio</a>
+                            </li>
+                            <li class="nav-item pointer-cur" *ngIf="!isSocial">
+                                <a class="nav-link"
+                                    [ngClass]="{'active': selectedPage === 3, 'nav-item-disabled': profileType === 'F'}"
+                                    (click)="selectPage(3)">Account Settings</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div *ngIf="selectedPage === 0">
+                    <form [formGroup]="editProfileForm" style="min-height: 60vh">
+                        <div class="row mt-5 justify-content-center">
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="mt-2" style="text-align: center">Change Pic</h4>
+                                    </div>
+                                </div>
+                                <div class="row mt-4" style="justify-content: center">
+                                    <div class="col-12 justify-content-center d-flex">
+                                        <a href="#" (click)="$event.preventDefault();"> <img src="{{ myPicture }}"
+                                                class="img-fluid d-inline rounded-circle box-shadow-center-down"
+                                                style="object-fit:cover; width:35vh; height:35vh" (click)="fileInput.click()"
+                                                pTooltip="Click image to upload and change your profile picture" *ngIf="myPicture"
+                                                tooltipPosition="right" showDelay="500" hideDelay="4500" tooltipZIndex="1"></a>
+                                    </div>
+                                </div>
+                                <input class="form-control" style="display: none" type="file" accept="image/*"
+                                    (change)="createFormData($event)" #fileInput />
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="row mt-5 mt-lg-0">
+                                    <div class="col-12">
+                                        <h4 class="mt-2" style="text-align: center">
+                                            Edit Info
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="row mx-auto" style="width: 100%">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div *ngIf="hasAlert">
+                                            <p class="equal-margins" [ngStyle]="{'color':alertType}"
+                                                style="text-align:center; padding-left: 10px;">
+                                                {{ alertText }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-sm-6">
+                                        <div class="col-12 d-flex mt-1" style="flex-direction: column">
+                                            <label for="firstName" maxlength="99" class="label-bln-nosep"
+                                                [ngClass]="{'label-bln-active': (firstName.value !== '')}">First Name</label>
+                                            <div class="d-flex" style="width:100%; flex-direction: row">
+                                                <input type="text"
+                                                    class="input-bln"
+                                                    [ngClass]="{'bln-success': firstName.touched && firstName.valid, 'bln-fail': firstName.touched && firstName.invalid}"
+                                                    id="firstName" formControlName="firstName" style="flex-grow: 1">
+                                                <div class="d-flex"
+                                                    style="flex-direction: row; justify-content: center;"
+                                                    *ngIf="firstName.touched && firstName.invalid">
+                                                    <div class="col-2 d-flex"
+                                                        style="align-items: center; text-align: center">
+                                                        <i placement="left-top" container="body"
+                                                            #tfirstName="ngbTooltip" [ngbTooltip]="firstNameTooltip"
+                                                            class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                                            style="font-size: 1.5rem"></i>
+
+                                                        <ng-template #firstNameTooltip>
+                                                            <div *ngIf="firstName.errors['required']">
+                                                                <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                                            </div>
+                                                            <div *ngIf="firstName.errors['pattern']">
+                                                                <p class="equal-margins">First name {{ environment.FIELD_UPPER_LOWER_COMMON }}</p>
+                                                            </div>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 mt-4 mt-sm-0">
+                                        <div class="col-12 d-flex mt-1" style="flex-direction: column">
+                                            <label for="lastName" class="label-bln-nosep"
+                                                [ngClass]="{'label-bln-active': (lastName.value !== '')}">Last Name</label>
+                                            <div class="d-flex" style="width:100%; flex-direction: row">
+                                                <input type="text" maxlength="99"
+                                                    class="input-bln"
+                                                    [ngClass]="{'bln-success': lastName.touched && lastName.valid, 'bln-fail': lastName.touched && lastName.invalid}"
+                                                    id="lastName" formControlName="lastName" style="flex-grow: 1">
+                                                <div class="d-flex"
+                                                    style="flex-direction: row; justify-content: center;"
+                                                    *ngIf="lastName.touched && lastName.invalid">
+                                                    <div class="col-2 d-flex"
+                                                        style="align-items: center; text-align: center">
+                                                        <i placement="left" container="body"
+                                                            #tlastName="ngbTooltip" [ngbTooltip]="lastNameTooltip"
+                                                            class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                                            style="font-size: 1.5rem"></i>
+
+                                                        <ng-template #lastNameTooltip>
+                                                            <div *ngIf="lastName.errors['required']">
+                                                                <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                                            </div>
+                                                            <div *ngIf="lastName.errors['pattern']">
+                                                                <p class="equal-margins">Last name {{ environment.FIELD_UPPER_LOWER_COMMON }}</p>
+                                                            </div>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-sm-6">
+                                        <div class="row" style="padding: 0 15px">
+                                            <div class="col-12">
+                                                <label for="date_end" style="font-size: 13.6px; color: #666">
+                                                    Birthdate &nbsp;
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding: 0 15px">
+                                            <div class="col-12" #birthdayDiv>
+                                                <p-calendar [(ngModel)]="birthday" [ngModelOptions]="{standalone: true}"
+                                                    id="birthday" type="date" dateFormat="dd MM yy"
+                                                    [yearNavigator]="true" [monthNavigator]="true"
+                                                    [yearRange]="yearrange" [maxDate]="today"
+                                                    placeholder="Birthdate" [showIcon]="iconDisp">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 mt-3 mt-sm-0">
+                                        <div class="row mt-1" style="padding: 0 15px">
+                                            <div class="col-12">
+                                                <label for="sex"
+                                                    style="font-size: 13.6px; color: #666">Gender</label>
+                                            </div>
+                                            <div class="col-12 d-flex"
+                                                style="flex-direction: row; justify-content: flex-start">
+                                                <p-radioButton class="mr-3" name="sex" value="M"
+                                                    label="Male" [(ngModel)]="sex" inputId="opt1"
+                                                    default [ngModelOptions]="{standalone: true}">
+                                                </p-radioButton>
+
+                                                <p-radioButton name="sex" value="F" label="Female"
+                                                    [(ngModel)]="sex" inputId="opt2"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                </p-radioButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-sm-6" *ngIf="countries">
+                                        <ng-select
+                                            formControlName="country"
+                                            [items]="countries" bindLabel="name"
+                                            (open)="loadCountries()"
+                                            (change)="selectCountry($event)"
+                                            placeholder="Country"
+                                            style="padding: 0 15px">
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-sm-6 mt-4 mt-sm-0">
+                                        <ng-select
+                                            formControlName="city"
+                                            [items]="cities"
+                                            (open)="loadCities()"
+                                            placeholder="City"
+                                            bindLabel="name">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-sm-6">
+                                        <div class="col-12 d-flex mt-1" style="flex-direction: column">
+                                            <div class="row">
+                                                <div class="col-12 d-flex" style="flex-direction: column">
+                                                    <label for="phone" class="label-bln-nosep"
+                                                        [ngClass]="{'label-bln-active': (phone.value !== '')}">
+                                                        <div *ngIf="phone.value === ''"
+                                                            style="min-width: 56px; width: 31%; height: 1px; content: ' '; display: inline-block">
+                                                        </div>
+                                                        Phone Number
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 d-flex"
+                                                    style="justify-content: center; flex-direction: row">
+                                                    <div class="d-flex" style="flex-direction: row; width: 100%">
+                                                        <input formControlName="phone" appInputRestriction="integerOnly"
+                                                            type="text" maxlength="15" id="phone" class="input-bln"
+                                                            [ngClass]="{'bln-success': phone.touched && phone.valid, 'bln-fail': phone.touched && phone.invalid}"
+                                                            style="width: 100%" pattern="[0-9]*"
+                                                            minlength="3" maxlength="15" placeholder="">
+                                                        <div class="d-flex"
+                                                            style="flex-direction: row; justify-content: center; max-width: 26px; margin-left: 5px"
+                                                            *ngIf="phone.touched && phone.invalid">
+                                                            <div class="d-flex"
+                                                                style="flex-direction: column; align-items: center; text-align: center">
+                                                                <i placement="auto" container="body"
+                                                                    #tphone="ngbTooltip" [ngbTooltip]="phoneTooltip"
+                                                                    class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                                                    style="font-size: 1.5rem"></i>
+
+                                                                <ng-template #phoneTooltip>
+                                                                    <div *ngIf="phone.errors['required']">
+                                                                        <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                                                    </div>
+                                                                    <div *ngIf="phone.errors['pattern']">
+                                                                        <p class="equal-margins">Phone number {{ environment.FIELD_NUMBER }}</p>
+                                                                    </div>
+                                                                </ng-template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 mt-4 mt-sm-0">
+                                        <div class="col-12 d-flex mt-1" style="flex-direction: column">
+                                            <label for="address" class="label-bln-nosep"
+                                                [ngClass]="{'label-bln-active': (address.value !== '')}">Address</label>
+                                            <div class="d-flex" style="flex-direction: row; width: 100%">
+                                                <input appInputRestriction="noSpecialExtended" type="text"
+                                                    maxlength="499" class="input-bln"
+                                                    [ngClass]="{'bln-success': address.touched && address.valid, 'bln-fail': address.touched && address.invalid}"
+                                                    id="address" formControlName="address" style="flex-grow: 1">
+
+                                                <div class="d-flex"
+                                                    style="flex-direction: row; justify-content: center;"
+                                                    *ngIf="address.touched && address.invalid">
+                                                    <div class="col-2 d-flex"
+                                                        style="align-items: center; text-align: center">
+                                                        <i placement="auto" container="body" #taddress="ngbTooltip"
+                                                            [ngbTooltip]="addressTooltip"
+                                                            class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                                            style="font-size: 1.5rem"></i>
+
+                                                        <ng-template #addressTooltip>
+                                                            <div *ngIf="address.errors['required']">
+                                                                <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                                            </div>
+                                                            <div *ngIf="address.errors['pattern']">
+                                                                <p class="equal-margins">Address field {{ environment.FIELD_UPPER_LOWER_COMMON }}
+                                                                </p>
+                                                            </div>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-5 justify-content-center">
+                                    <button class="access-but but-sm" (click)="updateProfileData()" type="submit">
+                                        Save Changes
+                                    </button>
+
+                                    <button class="deny-but but-sm" (click)="getProfile()" style="margin-left: 20px">
+                                        Revert Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div *ngIf="selectedPage === 1">
+                    <div style="min-height: 60vh">
+                        <div class="row mx-auto mt-3" style="width: 100%">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>My Cars</h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="row">
+                            <app-my-cars style="width: 100%;"></app-my-cars>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="selectedPage === 2">
+                    <div style="min-height: 60vh">
+                        <div class="row mt-5 justify-content-center">
+                            <div class="col-md-10">
+                                <div class="row mx-auto mt-2">
+                                    <label class="text-muted">Your bio</label>
+                                </div>
+                                <div class="row mx-auto">
+                                    <ckeditor [editor]="Editor" data="{{bio}}" (blur)="onChange($event)" style="width: 100%;"></ckeditor>
+
+                                    <div class="col-12 mt-3 p-0">
+                                        <button class="htButton-red d-inline-flex mr-3" style="flex-shrink: 1; flex-basis: 1" (click)="getProfile()">
+                                            Revert
+                                        </button>
+
+                                        <button class="htButton-blue d-inline-flex" style="flex-shrink: 1; flex-basis: 1" (click)="updateProfileData()">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="selectedPage === 3">
+                    <div style="min-height: 60vh">
+                        <div class="row mx-auto mt-5" style="width: 100%">
+                            <div class="col-12 d-flex justify-content-center">
+                                <div *ngIf="hasAlert">
+                                    <p class="p-0 equal-margins" [ngStyle]="{'color':alertType}"
+                                        style="text-align:center; padding-left: 10px;">
+                                        {{ alertText }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <form [formGroup]="editProfileForm">
+                            <div class="row mt-5 justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="row mx-auto mt-2">
+                                        <div class="d-flex mt-1 mr-3" style="flex-direction: column; flex-grow: 1">
+                                            <label class="label-bln-nosep"
+                                                [ngClass]="{'label-bln-active': (email.value !== '')}"
+                                                for="email">E-mail</label>
+                                            <input class="input-bln disabled-cur"
+                                                [ngClass]="{'disabled-cur': emailDisabled}" style="flex-grow: 1;"
+                                                id="email" placeholder="" formControlName="email">
+                                        </div>
+                                        <div class="d-flex"
+                                            style="flex-direction: row; justify-content: center;"
+                                            *ngIf="email.touched && email.invalid">
+                                            <div class="col-2 d-flex pl-0 mr-2"
+                                                style="align-items: center; text-align: center">
+                                                <i placement="right" container="body"
+                                                    [ngbTooltip]="emailTooltip"
+                                                    class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                                    style="font-size: 1.5rem; position: absolute; bottom: 0"></i>
+
+                                                <ng-template #emailTooltip>
+                                                    <div *ngIf="email.errors['required']">
+                                                        <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                                    </div>
+                                                    <div *ngIf="email.errors['email'] && email.value">
+                                                        <p class="equal-margins">{{ environment.EMAIL_NOT_VALID }}</p>
+                                                    </div>
+                                                </ng-template>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto p-0 d-flex mt-1 justify-content-center"
+                                            style="flex-direction: column">
+                                            <a *ngIf="emailDisabled"
+                                                class="unselectable mt-auto green-link link-transition-fast"
+                                                style="margin-bottom: 5.5px"
+                                                (click)="toggleEmail()">Change Email</a>
+                                            <button *ngIf="!emailDisabled" class="switch-but but-sm mt-auto d-block"
+                                                style="margin-bottom: 0" (click)="toggleEmail()">
+                                                Change Email</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-5 justify-content-center">
+                                <div class="col-md-6 justify-content-center d-flex">
+                                    <button class="switch-but"
+                                        (click)="openChangePassword()">Change Password</button>
+                                </div>
+                            </div>
+
+                            <div class="row mt-5 justify-content-center">
+                                <h4 class="text-muted">Profile Visibility</h4>
+                                <div class="row col-12" style="justify-content: center">
+                                    <p-radioButton class="mr-3" name="visibility" value="Pr"
+                                        label="Not Visible" [(ngModel)]="visibility"
+                                        inputId="opt7" default [ngModelOptions]="{standalone: true}">
+                                    </p-radioButton>
+
+                                    <p-radioButton name="visibility" value="Pu" label="Visible"
+                                        [(ngModel)]="visibility" inputId="opt8"
+                                        [ngModelOptions]="{standalone: true}">
+                                    </p-radioButton>
+                                </div>
+                                <div class="row col-12 mt-3" style="justify-content: center">
+                                    <button class="switch-but but-sm"
+                                        (click)="updateVisibility()">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div *ngIf="changePasswordShow" class="modal-bln d-flex justify-content-center">
+    <app-change-password (closePass)="closeChangePassword()"></app-change-password>
+</div>
+
+<ngx-loading [show]="loading"
+    [config]="{animationType: ngxLoadingAnimationTypes.circleSwish, primaryColour: '#49d37b',backdropBackgroundColour: 'rgba(255, 255, 255, 0.5)', backdropBorderRadius: '3px'}"
+    [template]="loadingTemplate">
+</ngx-loading>

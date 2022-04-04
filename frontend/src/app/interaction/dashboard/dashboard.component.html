@@ -1,0 +1,129 @@
+<div class="content-wrapper d-flex justify-content-center"
+    style="font-family: 'Roboto Condensed', sans-serif !important;">
+    <div class="row justify-content-center" style="width: 100%">
+        <div class="col-12 mt-5 pl-4 pr-5">
+            <div class="row" style="height: 100%; min-height: 95vh;" *ngIf="!privateProfile">
+                <div class="col-2 col-xl-2 pl-1 pr-1 pr-lg-3 d-flex"
+                    style="border-right: solid 0.5px #777; flex-direction: column">
+                    <div class="d-flex" style="flex-direction: column; min-height: 95vh;">
+                        <div class="d-flex" style="flex-direction: row; justify-content: center; padding-top: 61px;">
+                            <div class="px-2 d-flex justify-content-center"
+                                style="flex-direction: column; align-items: center">
+                                <img *ngIf="profileData && profileData.picture"
+                                    src="{{ profileData.picture }}"
+                                    style="height: 150px; width: 150px;"
+                                    class="mb-3 img-fluid d-block rounded-circle box-shadow-center-down">
+
+                                <h4 class="mb-1" style="text-align: center" *ngIf="profileData.firstName">{{profileData.firstName}} {{profileData.lastName}}</h4>
+                                <h4 class="mb-1" style="text-align: center" *ngIf="!profileData.firstName">{{profileData.email}}</h4>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-3 mt-2 mx-lg-2"
+                            style="flex-direction: column; flex-grow: 1; justify-content: center">
+                            <div class="d-flex" style="flex-direction: row; justify-self: center">
+                                <div class="d-flex mx-auto" style="flex-direction: column; width: 100%">
+                                    <ul class="list-unstyled pl-4 mt-1"
+                                        style="padding-inline-start: 0px !important; width: 100%">
+                                        <li class="d-flex my-3 text-muted" *ngIf="myPosts"
+                                            style="flex-direction: column">
+                                            You have a total of {{ myPosts.length }} posts
+                                        </li>
+                                        <li class="d-flex my-3" style="flex-direction: column">
+                                            <span class="label-nasp">Email</span>
+                                            {{profileData.email}}
+                                        </li>
+                                        <li class="d-flex my-3" style="flex-direction: column" *ngIf="profileData.age">
+                                            <span class="label-nasp">Age</span>
+                                            {{profileData.age}}
+                                        </li>
+                                        <li class="d-flex my-3" style="flex-direction: column" *ngIf="profileData.country">
+                                            <span class="label-nasp">Country</span>
+                                            {{profileData.country.name}}
+                                        </li>
+                                        <li class="d-flex my-3" style="flex-direction: column" *ngIf="profileData.city">
+                                            <span class="label-nasp">City</span>
+                                            {{profileData.city.name}}
+                                        </li>
+                                        <li class="d-flex my-3" style="flex-direction: column" *ngIf="profileData.sex">
+                                            <span class="label-nasp">Gender</span>
+                                            {{profileData.sex === 'M' ? 'Male' : 'Female'}}
+                                        </li>
+                                        <li class="d-flex my-3" style="flex-direction: column" *ngIf="profileData.phone">
+                                            <span class="label-nasp">Phone Number</span>
+                                            {{profileData.phone}}
+                                        </li>
+                                        <li class="d-flex my-3 text-muted" *ngIf="profileData.visibility"
+                                            style="flex-direction: column">
+                                            Your profile is {{ profileData.visibility === 'Pu' ? 'Public' : 'Private' }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-auto mb-5" style="flex-direction: row">
+                            <div class="d-flex" style="flex-direction: column; justify-content: center; width: 100%">
+                                <button (click)="router.navigate(['edit-profile/0'])"
+                                    class="but-sm access-but mx-4 d-flex"
+                                    style="flex-grow: 1; flex-direction: row; text-align: center; justify-content: center">
+                                    Edit Profile
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 col-xl-10 d-flex pl-5 pt-5" style="flex-direction: column">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3 class="text-large mb-1">Dashboard</h3>
+                            <h6 class="text-muted mb-3">Here you will see posts from your favourite forums and responses to watched threads</h6>
+
+                            <div class="btn-group btn-group-toggle ml-3 mb-3" ngbRadioGroup name="radioBasic"
+                                [(ngModel)]="searchCriteria">
+                                <label ngbButtonLabel [ngClass]="{
+                                        'access-but' : searchCriteria === 'newThread',
+                                        'switch-but' : searchCriteria === 'newPost'
+                                    }" style="outline: none !important; justify-content: center; flex-direction: column"
+                                    class="but-sm d-flex">
+                                    <input ngbButton type="radio" [value]="'newThread'" (click)="getNewPosts('newThread')"
+                                        class="d-flex" style="justify-content: center; flex-direction: column">
+                                    <span>
+                                        From Favourite Forums
+                                    </span>
+                                </label>
+                                <label ngbButtonLabel [ngClass]="{
+                                        'switch-but' : searchCriteria === 'newThread',
+                                        'access-but' : searchCriteria === 'newPost'
+                                    }" style="outline: none !important; justify-content: center; flex-direction: column"
+                                    class="but-sm d-flex">
+                                    <input ngbButton type="radio" [value]="'newPost'" (click)="getNewPosts('newPost')"
+                                        class="d-flex" style="justify-content: center; flex-direction: column">
+                                    <span>
+                                        From Watched Threads
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div class="col-12" *ngIf="data.length > 0">
+                                <app-post
+                                    *ngFor="let d of data"
+                                    [dashboard]="true"
+                                    [data]="d.post"
+                                    [width]="'70vw'"
+                                    [type]="searchCriteria"
+                                    (unfollow)="unfollowThread(d)">
+                                </app-post>
+                            </div>
+
+                            <div class="col-12" *ngIf="data.length === 0" style="position: absolute; height: 80vh; width: 80vw;">
+                                <h1 class="text-muted" style="position: relative; top: 35%; left: 35%;">
+                                    No posts to show
+                                </h1>
+                            </div>
+                            <hr class="my-4" style="opacity: 0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

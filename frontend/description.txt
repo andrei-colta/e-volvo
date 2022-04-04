@@ -1,0 +1,33 @@
+e-VOLVO Forum
+1.	Description 
+    e-VOLVO is a highly interactive forum dedicated to Volvo owners and amateurs around the world.
+It allows sharing videos and pictures of interesting Volvo related news and articles, 
+home videos and owners seeking help for malfunctions. The forum is regulated by an active
+community of moderators who seek to achieve a civilized and friendly environment for all 
+users. There is also a live chat section dedicated to starting conversations about various 
+topics related to their cars and sharing articles and other links. The users will be able 
+to edit their personal profile with details about age, location, cars owned currently or in 
+the past and a small description. This information will be visible to other users who will 
+also see your total number of posts and for how long they have been a member, distinguishing
+between new users and older ones. 
+
+2.	Design
+    The application will be designed with a dashboard for the user, where he can monitor responses
+to his posts, watch favorited posts, see statistics about his number of posts and edit his public 
+profile. The other pages are Login/Signup, a menu of general topics and a more focused submenu of
+opened threads, with a search function and filters; a page for FAQ’s and Terms and conditions / 
+Privacy policy about personal data & GDPR and the public profile page on which the user’s public 
+data is displayed. 
+
+3.	Regular Users
+    The application allows users to see forum threads and response without being logged 
+in but only allows logged users to post and up vote / down vote answers and have an editable profile. 
+
+4.	Tech Support / Moderators
+    The site’s tech support is done by the moderators who have the added privileges of banning users 
+and removing posts. They also have access to the ticket system to answer all the questions of users 
+related to the site’s functionality. 
+
+5.	Administrator 
+    The administrator will manage rights for different users, make or remove moderators and also ban
+any user.

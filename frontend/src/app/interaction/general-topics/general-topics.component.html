@@ -1,0 +1,42 @@
+<div class="content-wrapper d-flex"
+    style="flex-flow: column; justify-content: flex-start; font-family: 'Roboto Condensed', sans-serif !important; margin-top: 50px; min-height: 100vh">
+    <div class="d-flex mt-1" style="flex-direction: column; position: absolute; height: 100%; width: 100%">
+        <div class="d-flex"
+            style="flex-direction: row; position: sticky; top: 0px;  z-index: 700;  transition: all 0.3s ease-out"
+            [ngStyle]="{'padding-top': '61px' }">
+        </div>
+    </div>
+    <div class="row justify-content-center mb-5 pb-4" style="width: 100%">
+        <div class="col-11 mt-5 mb-5">
+            <div class="container-fluid justify-content-center">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-large">General Topics</h3>
+                    </div>
+                </div>
+                <div class="row mt-4 unselectable">
+                    <div class="col-10">
+                        <ul>
+                            <li *ngFor="let forum of forums" class="mt-2 forum pointer-cur">
+                                <div class="row">
+                                    <div class="col-1" (click)="router.navigate(['/threads/' + forum.url])">
+                                        <i class="fas {{ forum.iconClass }} ml-2 mt-1" style="font-size: 28px"></i>
+                                    </div>
+                                    <div class="col-10" (click)="router.navigate(['/threads/' + forum.url])">
+                                        <h4 class="mt-1">
+                                            {{ forum.name }}
+                                        </h4>
+                                    </div>
+                                    <div class="col-1" *ngIf="accessService.isLogged">
+                                        <app-favourite [favourite]="forum.favourite" (click)="toggleFavourite(forum)" style="float: right"
+                                            [style]="{'font-size': '32px'}"></app-favourite>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

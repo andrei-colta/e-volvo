@@ -1,0 +1,65 @@
+<div class="content-wrapper d-flex"
+    style="flex-flow: column; justify-content: flex-start; font-family: 'Roboto Condensed', sans-serif !important; margin-top: 50px; min-height: 100vh">
+    <div class="d-flex mt-1" style="flex-direction: column; position: absolute; height: 100%; width: 100%">
+        <div class="d-flex"
+            style="flex-direction: row; position: sticky; top: 0px;  z-index: 700;  transition: all 0.3s ease-out"
+            [ngStyle]="{'padding-top': '61px' }">
+        </div>
+    </div>
+    <div class="row justify-content-center mb-5 pb-4" style="width: 100%">
+        <div class="col-11 mt-5 mb-5">
+            <div class="container-fluid justify-content-center">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-large">Admin Menu</h3>
+                    </div>
+                </div>
+
+                <div class="row mt-4 unselectable pointer-cur" *ngIf="!showNewThreadForm">
+                    <div class="col-12">
+                        <p-table [value]="users" [paginator]="true" [rows]="10">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Email</th>
+                                    <th>Name</th>
+                                    <th>Moderator</th>
+                                    <th></th>
+                                    <!-- <th>Started By</th>
+                                    <th>Replies</th>
+                                    <th>Created</th>
+                                    <th></th> -->
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-user>
+                                <tr>
+                                    <td>{{ user._id }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.firstName }} {{ user.lastName }}</td>
+                                    <td>
+                                        {{ user.admin || user.moderator ? 'Yes' : 'No' }}
+                                        <span [ngClass]="{'moderator-btn': !user.admin}" class="ml-2" *ngIf="!user.admin" (click)="setModerator(user)">
+                                            ({{ user.moderator ? 'Unmake moderator' : 'Make moderator' }})
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class='ban-btn' *ngIf="!user.admin" (click)="banUser(user)">
+                                            {{ user.admin ? '' : user.banned ? 'Unban user' : 'Ban user'}}
+                                        </span>
+                                    </td>
+                                    <!-- <td (click)="router.navigate(['/thread/' + thread._id])">{{thread.replies}}</td>
+                                    <td (click)="router.navigate(['/thread/' + thread._id])">{{thread.creationDate}}</td>
+                                    <td>
+                                        <span class="follow-thread-button" (click)="toggleFavouriteThread(thread)">
+                                            {{thread.favourite ? 'Unfollow Thread' : 'Follow Thread'}}
+                                        </span>
+                                    </td> -->
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

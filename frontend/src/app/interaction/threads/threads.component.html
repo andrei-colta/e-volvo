@@ -1,0 +1,131 @@
+<div class="content-wrapper d-flex"
+    style="flex-flow: column; justify-content: flex-start; font-family: 'Roboto Condensed', sans-serif !important; margin-top: 50px; min-height: 95vh;">
+    <div class="d-flex mt-1" style="flex-direction: column; position: absolute; height: 100%; width: 100%">
+        <div class="d-flex"
+            style="flex-direction: row; position: sticky; top: 0px;  z-index: 700;  transition: all 0.3s ease-out"
+            [ngStyle]="{'padding-top': '61px' }">
+        </div>
+    </div>
+    <div class="row justify-content-center mb-5 pb-4" style="width: 100%">
+        <div class="col-11 mt-5 mb-5">
+            <div class="container-fluid justify-content-center">
+                <div class="row">
+                    <div class="col-12" *ngIf="forumData">
+                        <app-favourite [favourite]="forumData.favourite" (click)="toggleFavourite()" style="float: right; margin-top: 30px;"
+                            [style]="{'font-size': '48px'}" *ngIf="accessService.isLogged"></app-favourite>
+                        <h3 class="text-large">{{ forumData.name }}</h3>
+
+                        <div class="row mx-auto text-muted">
+                            <h5>
+                                {{ forumData.description }}
+                            </h5>
+                        </div>
+
+                        <a class="ml-1 my-auto green-link link-transition-fast"
+                        (click)="router.navigate(['/general'])">
+                        <i class="fas fa-arrow-left mr-3"></i>Back to General Topics</a>
+                    </div>
+                </div>
+                <div class="row mt-3 col-4">
+                    <button (click)="toggleNewThreadForm()"
+                        class="but-sm d-flex" [ngClass]="{'access-but': !showNewThreadForm, 'deny-but': showNewThreadForm}"
+                        style="flex-grow: 1; flex-direction: row; text-align: center; justify-content: center">
+                        
+                        <span *ngIf="!showNewThreadForm">
+                            Add a new thread
+                        </span>
+                        <span *ngIf="showNewThreadForm">
+                            Cancel
+                        </span>
+                    </button>
+
+                    <button (click)="router.navigate(['chat/' + forumData.url])"
+                        class="but-sm switch-but d-flex ml-3"
+                        style="flex-grow: 1; flex-direction: row; text-align: center; justify-content: center">
+                        Live Chat
+                    </button>
+                </div>
+                <div class="row mt-4 unselectable pointer-cur" *ngIf="!showNewThreadForm">
+                    <div class="col-12">
+                        <p-table [value]="threads" [paginator]="true" [rows]="10">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Discussion</th>
+                                    <th>Started By</th>
+                                    <th>Replies</th>
+                                    <th>Created</th>
+                                    <th></th>
+                                    <th *ngIf="(viewerIsAdmin || viewerIsModerator)"></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-thread>
+                                <tr>
+                                    <td (click)="router.navigate(['/thread/' + thread._id])">{{thread.title}}</td>
+                                    <td (click)="router.navigate(['/thread/' + thread._id])">
+                                        <img src="{{ thread.author.picture }}" class="profile-pic mr-1">
+                                        {{thread.author.name}}
+                                    </td>
+                                    <td (click)="router.navigate(['/thread/' + thread._id])">{{thread.replies}}</td>
+                                    <td (click)="router.navigate(['/thread/' + thread._id])">{{thread.creationDate}}</td>
+                                    <td>
+                                        <span class="follow-thread-button" (click)="toggleFavouriteThread(thread)">
+                                            {{thread.favourite ? 'Unfollow Thread' : 'Follow Thread'}}
+                                        </span>
+                                    </td>
+                                    <td *ngIf="(viewerIsAdmin || viewerIsModerator)">
+                                        <span class="follow-thread-button" (click)="removeThread(thread)">
+                                            Remove Thread
+                                        </span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+
+                <div class="row mt-4 unselectable pointer-cur mx-auto" *ngIf="showNewThreadForm">
+                    <form [formGroup]="newThreadForm" style="width: 100%;">
+                        <div class="col-8 d-flex mt-1 p-0 mb-5" style="flex-direction: column">
+                            <label for="title" maxlength="99" class="label-bln-nosep"
+                                [ngClass]="{'label-bln-active': (title.value !== '')}">Title</label>
+                            <div class="d-flex" style="width:100%; flex-direction: row">
+                                <input type="text"
+                                    class="input-bln"
+                                    [ngClass]="{'bln-success': title.touched && title.valid, 'bln-fail': title.touched && title.invalid}"
+                                    id="title" formControlName="title" style="flex-grow: 1">
+                                <div class="d-flex"
+                                    style="flex-direction: row; justify-content: center;"
+                                    *ngIf="title.touched && title.invalid">
+                                    <div class="col-2 d-flex"
+                                        style="align-items: center; text-align: center">
+                                        <i placement="left-top" container="body"
+                                            #ttitle="ngbTooltip" [ngbTooltip]="titleTooltip"
+                                            class="pointer-cur fas fa-times d-inline-block mx-auto my-auto text-danger"
+                                            style="font-size: 1.5rem"></i>
+            
+                                        <ng-template #titleTooltip>
+                                            <div *ngIf="title.errors['required']">
+                                                <p class="equal-margins">{{ environment.REQUIRED_FIELD }}</p>
+                                            </div>
+                                            <div *ngIf="title.errors['pattern']">
+                                                <p class="equal-margins">First name {{ environment.FIELD_UPPER_LOWER_COMMON }}</p>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ckeditor [editor]="Editor" data="{{environment.EDITOR_PLACEHOLDER_POST}}" (blur)="onChange($event)"></ckeditor>
+
+                        <div class="col-12 mt-3 p-0">
+                            <button class="htButton-blue d-inline-flex" style="flex-shrink: 1; flex-basis: 1" (click)="addThread()">
+                                Add Post
+                            </button> 
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
